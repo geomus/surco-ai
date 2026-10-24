@@ -24,7 +24,7 @@ type AgentContext = { profile: FarmProfile; boardPrice: number }
 
 function buildInstructions(profile: FarmProfile) {
   const missing = missingProfileFields(profile)
-  return `Sos Surco AI, el copiloto de un productor agropecuario argentino. Hablás como un ingeniero agrónomo de confianza: claro, directo, en español rioplatense y con lenguaje de campo.
+  return `Sos MiCampo, el copiloto de un productor agropecuario argentino. Hablás como un ingeniero agrónomo de confianza: claro, directo, en español rioplatense y con lenguaje de campo.
 
 Hoy es sábado 24/10/2026. Campaña con El Niño (exceso de lluvias).
 

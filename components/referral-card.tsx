@@ -124,7 +124,7 @@ export function ReferralCard({ draft, caseId, profile, boardPrice }: ReferralCar
               className="mt-1 accent-primary"
             />
             <span>
-              Revisé los datos y autorizo compartir esta carpeta con {draft.destination}. Surco AI no contrata ni vende
+              Revisé los datos y autorizo compartir esta carpeta con {draft.destination}. MiCampo no contrata ni vende
               nada en mi nombre.
             </span>
           </label>

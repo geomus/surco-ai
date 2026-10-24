@@ -54,7 +54,7 @@ export function ChatPanel({ caseId, profile, boardPrice, messages, busy, error, 
 
   return (
     <section
-      aria-label="Conversación con Surco AI"
+      aria-label="Conversación con MiCampo"
       className="flex min-h-[32rem] flex-col rounded-lg border bg-card lg:sticky lg:top-4 lg:h-[calc(100dvh-8rem)]"
     >
       <div className="flex items-center justify-between border-b px-4 py-3">
@@ -72,7 +72,7 @@ export function ChatPanel({ caseId, profile, boardPrice, messages, busy, error, 
         {messages.length === 0 ? (
           <div className="flex flex-col gap-3">
             <p className="text-sm leading-relaxed text-muted-foreground">
-              Contale en tus palabras qué tenés sembrado y qué vendiste. Surco AI cruza clima, satélite y tus contratos y
+              Contale en tus palabras qué tenés sembrado y qué vendiste. MiCampo cruza clima, satélite y tus contratos y
               te dice qué hacer, con la fuente de cada número.
             </p>
             <div className="flex flex-wrap gap-2">
@@ -163,7 +163,7 @@ export function ChatPanel({ caseId, profile, boardPrice, messages, busy, error, 
         className="flex items-end gap-2 border-t p-3"
       >
         <label htmlFor="chat-input" className="sr-only">
-          Mensaje para Surco AI
+          Mensaje para MiCampo
         </label>
         <textarea
           id="chat-input"

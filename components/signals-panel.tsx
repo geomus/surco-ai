@@ -61,7 +61,7 @@ export function SignalsPanel({ caseId, profile, boardPrice, busy, onAsk }: Signa
           El panel se arma mientras conversás
         </h2>
         <p className="text-sm leading-relaxed text-muted-foreground">
-          Con estos datos Surco AI cruza clima, satélite y contratos:
+          Con estos datos MiCampo cruza clima, satélite y contratos:
         </p>
         <ul className="flex flex-col gap-1.5 text-sm">
           {missing.map((field) => (
