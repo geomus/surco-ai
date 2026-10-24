@@ -17,7 +17,8 @@ import { REFERRAL_DESTINATIONS } from '@/lib/referral'
 import type { FieldTask } from '@/lib/types'
 import { getWeather, weatherSourceLabel, type Weather } from '@/lib/weather'
 
-export const AGENT_MODEL = 'anthropic/claude-sonnet-5.5'
+// Haiku is ~20x cheaper than Sonnet and handles this tool loop well; override with AI_MODEL.
+export const AGENT_MODEL = process.env.AI_MODEL ?? 'anthropic/claude-haiku-5.5'
 
 type AgentContext = { profile: FarmProfile; boardPrice: number }
 
