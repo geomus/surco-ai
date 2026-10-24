@@ -7,6 +7,7 @@ import { Button } from '@/components/ui/button'
 import type { FarmAgentMessage } from '@/lib/agent'
 import { LEVEL_LABEL, LEVEL_TEXT, formatPct, formatTons, formatUsd } from '@/lib/format'
 import type { FarmProfile } from '@/lib/profile'
+import { REFERRAL_KIND_LABEL } from '@/lib/referral'
 
 type ReferralDraft = Exclude<
   Extract<FarmAgentMessage['parts'][number], { type: 'tool-prepareReferral'; state: 'output-available' }>['output'],
@@ -46,7 +47,7 @@ export function ReferralCard({ draft, caseId, profile, boardPrice }: ReferralCar
     <article className="flex w-full flex-col gap-3 rounded-lg border-2 border-primary/30 bg-background p-4">
       <header className="flex flex-col gap-0.5">
         <span className="font-mono text-xs uppercase tracking-wide text-muted-foreground">
-          {isFinancing ? 'Carpeta de financiación' : 'Solicitud de seguro'}
+          {REFERRAL_KIND_LABEL[draft.kind]}
         </span>
         <h3 className="text-sm font-semibold">Para: {draft.destination}</h3>
         <p className="text-xs text-muted-foreground">{draft.field}</p>
