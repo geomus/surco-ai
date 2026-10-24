@@ -3,7 +3,9 @@
 import { useChat } from '@ai-sdk/react'
 import { DefaultChatTransport } from 'ai'
 import { useMemo, useState } from 'react'
+import { BrandLogo } from '@/components/brand-logo'
 import { ChatPanel } from '@/components/chat-panel'
+import { FieldHero } from '@/components/field-hero'
 import { SignalsPanel } from '@/components/signals-panel'
 import type { FarmAgentMessage } from '@/lib/agent'
 import type { DemoCase } from '@/lib/cases'
@@ -43,18 +45,15 @@ export function FarmWorkspace({ cases, defaultBoardPrice }: { cases: DemoCase[];
 
   return (
     <div className="flex min-h-dvh flex-col">
-      <header className="border-b bg-card">
+      <header className="bg-primary text-primary-foreground">
         <div className="mx-auto flex max-w-7xl flex-wrap items-center justify-between gap-4 px-4 py-3">
-          <div className="flex items-baseline gap-3">
-            <span className="text-xl font-bold tracking-tight text-primary">MiCampo</span>
-            <span className="hidden text-sm text-muted-foreground sm:inline">El legajo único del productor</span>
-          </div>
+          <BrandLogo tone="light" />
 
           <div className="flex flex-wrap items-center gap-3">
             <div
               role="radiogroup"
               aria-label="Caso de demostración"
-              className="flex flex-wrap rounded-md border bg-background p-0.5"
+              className="flex flex-wrap rounded-full bg-primary-foreground/10 p-1"
             >
               {cases.map((demoCase) => (
                 <button
@@ -65,10 +64,10 @@ export function FarmWorkspace({ cases, defaultBoardPrice }: { cases: DemoCase[];
                   disabled={busy}
                   onClick={() => setCaseId(demoCase.id as CaseId)}
                   className={cn(
-                    'rounded px-3 py-1.5 text-sm transition-colors disabled:opacity-60',
+                    'rounded-full px-3 py-1.5 text-sm font-medium transition-colors disabled:opacity-60',
                     demoCase.id === caseId
-                      ? 'bg-primary text-primary-foreground'
-                      : 'text-muted-foreground hover:text-foreground',
+                      ? 'bg-card text-primary shadow-sm'
+                      : 'text-primary-foreground/75 hover:text-primary-foreground',
                   )}
                 >
                   {demoCase.name}
@@ -80,10 +79,8 @@ export function FarmWorkspace({ cases, defaultBoardPrice }: { cases: DemoCase[];
         </div>
       </header>
 
-      <p className="border-b bg-muted px-4 py-1.5 text-center text-xs leading-relaxed text-muted-foreground">
-        Real: ubicación y pronóstico (Open-Meteo). Ilustrativo: productores, contratos y NDVI precalculado. Precio
-        pizarra cargado a mano.
-      </p>
+      <FieldHero />
+
 
       <main className="mx-auto grid w-full max-w-7xl flex-1 gap-4 p-4 lg:grid-cols-[minmax(0,5fr)_minmax(0,7fr)]">
         <ChatPanel
@@ -111,8 +108,8 @@ function BoardPriceInput({ value, onCommit }: { value: number; onCommit: (value:
   }
   return (
     <label className="flex items-center gap-2 text-sm">
-      <span className="text-muted-foreground">Pizarra Rosario</span>
-      <span className="flex items-center rounded-md border bg-background px-2">
+      <span className="text-primary-foreground/75">Pizarra Rosario</span>
+      <span className="flex items-center rounded-full bg-card px-3 text-foreground">
         <span className="font-mono text-xs text-muted-foreground">USD/t</span>
         <input
           inputMode="decimal"

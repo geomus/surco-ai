@@ -1,6 +1,7 @@
 import type { Metadata } from 'next'
 import { notFound } from 'next/navigation'
 import { z } from 'zod'
+import { BrandLogo } from '@/components/brand-logo'
 import { PrintButton } from '@/app/referral/[id]/print-button'
 import {
   LEVEL_LABEL,
@@ -56,7 +57,7 @@ export default async function ReferralPage({ params }: { params: Promise<{ id: s
     <main className="mx-auto flex max-w-3xl flex-col gap-6 bg-card p-6 text-card-foreground sm:my-8 sm:rounded-lg sm:border sm:p-10 print:my-0 print:max-w-none print:border-0 print:p-0">
       <header className="flex flex-wrap items-start justify-between gap-4">
         <div className="flex flex-col gap-1">
-          <span className="font-mono text-xs tracking-wide text-muted-foreground uppercase">MiCampo</span>
+          <BrandLogo className="mb-3" />
           <h1 className="text-xl font-semibold">{REFERRAL_KIND_LABEL[kind]}</h1>
           <p className="text-sm">
             Para: <span className="font-medium">{destination}</span>
