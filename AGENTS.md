@@ -194,7 +194,7 @@ Las claves JSON de `profile` están en camelCase (`referenceYieldTHa`, `ndviCurr
 
 ### IA y costos
 
-- El modelo se define en `lib/agent.ts` (`AGENT_MODEL`). Por defecto es `anthropic/claude-haiku-5.5`, sobreescribible con la variable `AI_MODEL`.
+- El modelo se define en `lib/agent.ts` (`AGENT_MODEL`). Por defecto es `nvidia/nemotron-3.5-lightning-free` (gratis en el free tier de AI Gateway, soporta tool-use), sobreescribible con la variable `AI_MODEL`. Otros modelos (Claude, GPT, Gemini) requieren comprar créditos pagos.
 - En Vercel y en v0 la autenticación del AI Gateway es automática (OIDC). **No agregues claves de proveedor.** En local hace falta `AI_GATEWAY_API_KEY` o `vercel env pull`.
 - Mantené `stopWhen: isStepCount(8)` o menos, y el prompt corto. Cada paso reenvía el contexto completo.
 
@@ -240,7 +240,7 @@ Después recorré el guion de la sección 6 en el navegador.
 | Variable | Dónde se usa | Notas |
 | --- | --- | --- |
 | `SUPABASE_URL`, `SUPABASE_SERVICE_ROLE_KEY` | `lib/supabase/admin.ts` | Las inyecta la integración de Supabase en Vercel |
-| `AI_MODEL` | `lib/agent.ts` | Opcional. Por defecto `anthropic/claude-haiku-5.5` |
+| `AI_MODEL` | `lib/agent.ts` | Opcional. Por defecto `nvidia/nemotron-3.5-lightning-free` |
 | `AI_GATEWAY_API_KEY` | AI SDK | Solo en local. En Vercel se usa OIDC automáticamente |
 
 Para desarrollo local con acceso al proyecto: `vercel link` y después `vercel env pull .env.local`.
