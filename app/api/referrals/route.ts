@@ -1,13 +1,14 @@
 import { z } from 'zod'
 import { getBcraSummary, isValidCuit } from '@/lib/bcra'
 import { computeSignals } from '@/lib/engine'
-import { profileSchema } from '@/lib/profile'
+import { CASE_IDS } from '@/lib/cases'
+import { isProfileReady, profileSchema } from '@/lib/profile'
 import { REFERRAL_DESTINATIONS, type ReferralSummary } from '@/lib/referral'
 import { getAdminClient } from '@/lib/supabase/admin'
 import { getWeather, weatherSourceLabel } from '@/lib/weather'
 
 const bodySchema = z.object({
-  caseId: z.enum(['green', 'yellow', 'red']),
+  caseId: z.enum(CASE_IDS),
   kind: z.enum(['financing', 'insurance']),
   profile: profileSchema,
   boardPrice: z.number().positive().max(2000),
@@ -28,8 +29,12 @@ export async function POST(request: Request) {
     return Response.json({ error: 'El CUIT no es válido' }, { status: 400 })
   }
 
+  if (!isProfileReady(profile)) {
+    return Response.json({ error: 'Faltan datos del legajo para armar la carpeta' }, { status: 400 })
+  }
+
   // Numbers are recomputed here so a referral never carries client-supplied figures.
-  const weather = await getWeather(caseId, profile.lat, profile.lon)
+  const weather = await getWeather(profile.lat, profile.lon)
   const signals = computeSignals(profile, weather, boardPrice)
   const bcra = kind === 'financing' && cuit ? await getBcraSummary(cuit) : null
 

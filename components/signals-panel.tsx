@@ -11,7 +11,9 @@ import type { FarmProfile } from '@/lib/profile'
 import type { FieldTask, Signals } from '@/lib/types'
 import { cn } from '@/lib/utils'
 
-type SignalsResponse = { signals: Signals; weatherSource: string }
+type SignalsResponse =
+  | { signals: Signals; weatherSource: string; missing: [] }
+  | { signals: null; weatherSource: null; missing: string[] }
 
 async function fetchSignals([, body]: [string, string]): Promise<SignalsResponse> {
   const res = await fetch('/api/signals', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body })
@@ -47,7 +49,31 @@ export function SignalsPanel({ caseId, profile, boardPrice, busy, onAsk }: Signa
     )
   }
 
-  const { signals, weatherSource } = data
+  const { signals, weatherSource, missing } = data
+
+  if (!signals) {
+    return (
+      <section
+        aria-labelledby="pending-heading"
+        className="flex min-h-96 flex-col justify-center gap-3 rounded-lg border border-dashed bg-card p-6"
+      >
+        <h2 id="pending-heading" className="text-sm font-semibold">
+          El panel se arma mientras conversás
+        </h2>
+        <p className="text-sm leading-relaxed text-muted-foreground">
+          Con estos datos Surco AI cruza clima, satélite y contratos:
+        </p>
+        <ul className="flex flex-col gap-1.5 text-sm">
+          {missing.map((field) => (
+            <li key={field} className="flex items-center gap-2">
+              <span aria-hidden="true" className="size-2 rounded-full border border-muted-foreground" />
+              {field}
+            </li>
+          ))}
+        </ul>
+      </section>
+    )
+  }
 
   return (
     <div className={cn('flex flex-col gap-4 transition-opacity', isLoading && 'opacity-70')}>

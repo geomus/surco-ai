@@ -2,6 +2,7 @@ import 'server-only'
 import greenCache from '@/data/weather-cache/green.json'
 import yellowCache from '@/data/weather-cache/yellow.json'
 import redCache from '@/data/weather-cache/red.json'
+import { distanceKm } from '@/lib/geo'
 import type { WeatherSource } from '@/lib/types'
 
 export type Weather = {
@@ -19,14 +20,20 @@ export type Weather = {
 
 type OpenMeteoResponse = Omit<Weather, 'origin' | 'date'>
 
-const CACHES: Record<string, OpenMeteoResponse> = {
-  green: greenCache as OpenMeteoResponse,
-  yellow: yellowCache as OpenMeteoResponse,
-  red: redCache as OpenMeteoResponse,
-}
+const CACHES = [
+  { lat: -33.89, lon: -60.57, data: greenCache as OpenMeteoResponse },
+  { lat: -32.7, lon: -62.1, data: yellowCache as OpenMeteoResponse },
+  { lat: -30.99, lon: -61.43, data: redCache as OpenMeteoResponse },
+]
 const CACHE_DATE = '24/10/2026'
 
-export async function getWeather(caseId: string, lat: number, lon: number): Promise<Weather> {
+function nearestCache(lat: number, lon: number) {
+  return CACHES.reduce((best, cache) =>
+    distanceKm({ lat, lon }, cache) < distanceKm({ lat, lon }, best) ? cache : best,
+  ).data
+}
+
+export async function getWeather(lat: number, lon: number): Promise<Weather> {
   const url = new URL('https://api.open-meteo.com/v1/forecast')
   url.search = new URLSearchParams({
     latitude: String(lat),
@@ -48,7 +55,7 @@ export async function getWeather(caseId: string, lat: number, lon: number): Prom
       date: new Date().toLocaleDateString('es-AR', { timeZone: 'America/Argentina/Buenos_Aires' }),
     }
   } catch {
-    return { ...(CACHES[caseId] ?? CACHES.green), origin: 'cache', date: CACHE_DATE }
+    return { ...nearestCache(lat, lon), origin: 'cache', date: CACHE_DATE }
   }
 }
 

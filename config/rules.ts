@@ -40,3 +40,17 @@ export const RULES = {
 } as const
 
 export const DEFAULT_BOARD_PRICE_USD_T = 215
+
+// Assumed reference yields (t/ha) used only until the producer states his own.
+// Replace with MAGyP department estimates when that source is wired in.
+export const DEFAULT_YIELD_T_HA: Record<string, number> = {
+  trigo: 3.2,
+  soja: 3.0,
+  maíz: 7.5,
+  maiz: 7.5,
+  girasol: 2.0,
+  cebada: 3.5,
+}
+
+// A new field borrows the illustrative zone sketch of a demo field this close.
+export const NEARBY_FIELD_KM = 40

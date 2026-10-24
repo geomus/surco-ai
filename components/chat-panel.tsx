@@ -19,9 +19,14 @@ const TOOL_LABELS: Record<string, string> = {
   'tool-prepareReferral': 'Armó la carpeta',
 }
 
-const SUGGESTIONS = [
+const SCRATCH_SUGGESTIONS = [
+  'Tengo 150 ha de trigo en Ataliva, Santa Fe, en llenado de grano. Vendí 360 t a 190 USD para diciembre y el jueves 22 me cayó granizo.',
+  'Soy de Pergamino y tengo 120 ha de trigo',
+]
+
+const CASE_SUGGESTIONS = [
   '¿Puedo pulverizar mañana?',
-  'Tengo 150 ha de trigo y vendí 360 t a 190. ¿Me conviene vender más?',
+  '¿Me conviene vender más?',
   '¿Y si llueve 200 mm en noviembre?',
   '¿Qué zonas tengo que recorrer?',
   'Armame la carpeta para pedir financiación a fyo',
@@ -56,7 +61,9 @@ export function ChatPanel({ caseId, profile, boardPrice, messages, busy, error, 
         <div>
           <h2 className="text-sm font-semibold">Hablale como a tu agrónomo</h2>
           <p className="text-xs text-muted-foreground">
-            {profile.alias} · {profile.hectares} ha de {profile.crop} · {profile.location}
+            {profile.location
+              ? `${profile.alias} · ${profile.hectares} ha de ${profile.crop || '…'} · ${profile.location}`
+              : 'Legajo vacío: contale tu campo'}
           </p>
         </div>
       </div>
@@ -69,7 +76,7 @@ export function ChatPanel({ caseId, profile, boardPrice, messages, busy, error, 
               te dice qué hacer, con la fuente de cada número.
             </p>
             <div className="flex flex-wrap gap-2">
-              {SUGGESTIONS.map((suggestion) => (
+              {(caseId === 'scratch' ? SCRATCH_SUGGESTIONS : CASE_SUGGESTIONS).map((suggestion) => (
                 <button
                   key={suggestion}
                   type="button"
@@ -102,7 +109,11 @@ export function ChatPanel({ caseId, profile, boardPrice, messages, busy, error, 
                     </p>
                   )
                 }
-                if (part.type === 'tool-prepareReferral' && part.state === 'output-available') {
+                if (
+                  part.type === 'tool-prepareReferral' &&
+                  part.state === 'output-available' &&
+                  'requiresConsent' in part.output
+                ) {
                   return (
                     <ReferralCard
                       key={key}
