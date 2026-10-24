@@ -44,7 +44,7 @@ export function FarmWorkspace({ cases, defaultBoardPrice }: { cases: DemoCase[];
       <header className="border-b bg-card">
         <div className="mx-auto flex max-w-7xl flex-wrap items-center justify-between gap-4 px-4 py-3">
           <div className="flex items-baseline gap-3">
-            <span className="text-xl font-bold tracking-tight text-primary">Surco</span>
+            <span className="text-xl font-bold tracking-tight text-primary">Surco AI</span>
             <span className="hidden text-sm text-muted-foreground sm:inline">El legajo único del productor</span>
           </div>
 

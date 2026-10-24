@@ -1,33 +1,33 @@
-# surco-ai
+# Surco AI
 
-This is a [Next.js](https://nextjs.org) project bootstrapped with [v0](https://v0.app).
+Copiloto con IA para productores agropecuarios argentinos. Desde una sola conversación cruza clima, satélite (NDVI) y contratos de venta para responder tres preguntas: cuándo entrar al lote, cuánto vender y si conviene armar la carpeta de seguro o financiación.
 
-## Built with v0
+> Los 3 casos de demo (Pergamino, Marcos Juárez, Ataliva) usan datos sintéticos. El granizo del 22/10/2026 en Ataliva y el pronóstico de Open-Meteo son reales.
 
-This repository is linked to a [v0](https://v0.app) project. You can continue developing by visiting the link below -- start new chats to make changes, and v0 will push commits directly to this repo. Every merge to `main` will automatically deploy.
+## Arquitectura
 
-[Continue working on v0 →](https://v0.app/chat/projects/prj_THcmETzLre1XzWLPvCe1UukKRVgB)
+| Capa | Ruta | Qué hace |
+| --- | --- | --- |
+| Reglas | `config/rules.ts` | Umbrales auditables (NDVI, cobertura, ventanas de pulverización) |
+| Motor | `lib/engine.ts` | Calcula señales verde / amarillo / rojo de forma determinística |
+| Agente | `lib/agent.ts` | Agente del AI SDK con herramientas sobre el motor |
+| API | `app/api/*` | `chat`, `signals`, `referrals` |
+| Datos | Supabase | Tablas `cases` y `referrals` (RLS activado) |
+| UI | `components/*` | Esqueleto; se reescribe sin tocar las capas de arriba |
 
-## Getting Started
+La IA nunca inventa números: el agente llama al motor y explica el resultado. Las derivaciones requieren consentimiento explícito.
 
-First, run the development server:
+## Desarrollo
 
 ```bash
-npm run dev
-# or
-yarn dev
-# or
+pnpm install
 pnpm dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+Variables necesarias: las de la integración de Supabase (`SUPABASE_URL`, `SUPABASE_SERVICE_ROLE_KEY`, etc.). La IA usa Vercel AI Gateway y no requiere claves en v0 ni en Vercel.
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+## Cómo colaborar
 
-## Learn More
-
-To learn more, take a look at the following resources:
-
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
-- [v0 Documentation](https://v0.app/docs) - learn about v0 and how to use it.
+- Cada persona trabaja en su propia rama (`feat/...`) y abre un Pull Request contra `main`.
+- Cada merge a `main` se despliega automáticamente en Vercel.
+- Desde v0: [continuar el proyecto](https://v0.app/chat/projects/prj_THcmETzLre1XzWLPvCe1UukKRVgB).

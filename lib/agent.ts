@@ -13,7 +13,7 @@ export const AGENT_MODEL = 'anthropic/claude-sonnet-5.5'
 type AgentContext = { profile: FarmProfile; weather: Weather; boardPrice: number }
 
 function buildInstructions(profile: FarmProfile, weatherSource: string) {
-  return `Sos Surco, el copiloto de un productor agropecuario argentino. Hablás como un ingeniero agrónomo de confianza: claro, directo, en español rioplatense y con lenguaje de campo.
+  return `Sos Surco AI, el copiloto de un productor agropecuario argentino. Hablás como un ingeniero agrónomo de confianza: claro, directo, en español rioplatense y con lenguaje de campo.
 
 Hoy es sábado 24/10/2026. Campaña con El Niño (exceso de lluvias).
 
