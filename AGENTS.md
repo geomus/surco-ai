@@ -43,7 +43,7 @@ Contexto de negocio: proyecto de hackatón, con demo **en vivo**. El canal es un
 | 5. Derivaciones con consentimiento | Parcial | API y guardado listos; **falta la vista imprimible** y la prueba de punta a punta en navegador |
 | 6. Verificación en navegador + README | Pendiente | |
 
-**Repo:** público, `surco-ai` (nombre técnico heredado; el producto se llama MiCampo). **Deploy:** Vercel, proyecto `surco-ai` (team `geomus-projects`), URL `https://surco-ai-ar.vercel.app`. La URL vieja `estrategia-para-hackaton-shipp.vercel.app` redirige con un 308.
+**Repo:** público, `surco-ai` (nombre técnico heredado; el producto se llama MiCampo). **Deploy:** Vercel, proyecto `surco-ai` (team `geomus-projects`), URL `https://micampo-ar.vercel.app`. Las URLs viejas `surco-ai-ar.vercel.app` y `estrategia-para-hackaton-shipp.vercel.app` redirigen con un 308.
 
 ---
 
