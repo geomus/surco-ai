@@ -30,3 +30,17 @@ export function formatDay(isoDate: string) {
     day: 'numeric',
   })
 }
+
+export const formatArs = (value: number) => `$ ${Math.round(value).toLocaleString('es-AR')}`
+
+// Referrals are read on a server that runs in UTC, so the producer's timezone is explicit.
+export function formatDateTime(iso: string) {
+  return new Date(iso).toLocaleString('es-AR', {
+    timeZone: 'America/Argentina/Buenos_Aires',
+    day: 'numeric',
+    month: 'long',
+    year: 'numeric',
+    hour: '2-digit',
+    minute: '2-digit',
+  })
+}

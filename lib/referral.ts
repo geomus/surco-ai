@@ -9,6 +9,11 @@ export const REFERRAL_DESTINATIONS: Record<ReferralKind, string> = {
   insurance: 'Aseguradora, vía productor asesor de seguros matriculado',
 }
 
+export const REFERRAL_KIND_LABEL: Record<ReferralKind, string> = {
+  financing: 'Carpeta de financiación',
+  insurance: 'Solicitud de seguro',
+}
+
 export type ReferralSummary = {
   producer: string
   field: string

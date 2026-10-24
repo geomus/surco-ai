@@ -40,7 +40,7 @@ Contexto de negocio: proyecto de hackatón, con demo **en vivo**. El canal es un
 | 2. Motor de reglas + clima en vivo con respaldo | Hecha y verificada | Los 3 casos dan el semáforo esperado con Open-Meteo en vivo |
 | 3. Agente con herramientas + chat | Hecha | Incluye el modo "Desde cero" (legajo vacío, geocodificación, clima diferido) |
 | 4. Panel del legajo | Hecha (esqueleto) | Funciona, pero la UI se va a reescribir |
-| 5. Derivaciones con consentimiento | Parcial | API y guardado listos; **falta la vista imprimible** y la prueba de punta a punta en navegador |
+| 5. Derivaciones con consentimiento | Hecha | API, guardado y vista imprimible (`/referral/[id]`); falta la prueba de punta a punta en navegador (fase 6) |
 | 6. Verificación en navegador + README | Pendiente | |
 
 **Repo:** público, `surco-ai` (nombre técnico heredado; el producto se llama MiCampo). **Deploy:** Vercel, proyecto `surco-ai` (team `geomus-projects`), URL `https://surco-ai-ar.vercel.app`. La URL vieja `estrategia-para-hackaton-shipp.vercel.app` redirige con un 308.
@@ -72,7 +72,7 @@ lib/weather.ts             Open-Meteo con timeout + respaldo en data/weather-cac
 lib/geo.ts                 geocodeArgentina (Open-Meteo Geocoding, filtrado a AR)
 lib/cases.ts               Lectura de casos desde Supabase; findNearbyDemoField (croquis prestado <= 40 km)
 lib/agent.ts               createFarmAgent: ToolLoopAgent + 7 herramientas + instrucciones del sistema
-lib/referral.ts            Destinos de derivación y tipo del resumen guardado
+lib/referral.ts            Destinos y etiquetas de derivación; tipo del resumen guardado
 lib/bcra.ts                Central de Deudores del BCRA (solo con CUIT propio y consentimiento)
 lib/supabase/admin.ts      Cliente Supabase de servidor (service role). Nunca importarlo en el cliente
 lib/format.ts              Formateo de números/fechas es-AR
@@ -80,6 +80,7 @@ app/api/chat/route.ts      POST: corre el agente y devuelve el stream de UI
 app/api/signals/route.ts   POST: señales para el panel a partir del legajo
 app/api/referrals/route.ts POST: guarda una derivación (exige consent: true; BCRA opcional)
 app/page.tsx               Página única
+app/referral/[id]/page.tsx Vista imprimible de una derivación (lee Supabase en el servidor; + print-button.tsx)
 components/farm-workspace.tsx  Selector de caso + layout chat/panel; dueño del estado del legajo
 components/chat-panel.tsx      Chat (useChat); aplica la salida de updateProfile al legajo
 components/signals-panel.tsx   Panel de señales (SWR contra /api/signals)
@@ -167,14 +168,13 @@ Las claves JSON de `profile` están en camelCase (`referenceYieldTHa`, `ndviCurr
 
 ## 7. Pendientes (en orden de prioridad)
 
-1. **Vista imprimible de la derivación** (`app/referral/[id]/page.tsx`): leer desde el servidor con `lib/supabase/admin.ts`, layout limpio con `window.print()`, rotulando qué es real y qué es ilustrativo. La API ya devuelve el `id`.
-2. **Prueba de punta a punta en navegador** del guion de la demo, también en mobile.
-3. **Precio de Rosario real**: reemplazar el valor fijo por una fuente pública, con respaldo manual.
-4. **NDVI real** de Sentinel-2 para al menos el lote de Ataliva. Mostrar la fecha de la imagen y la nubosidad.
-5. **Rindes del MAGyP** por departamento en lugar de `DEFAULT_YIELD_T_HA`.
-6. **Reescritura de la UI** (lo hace otro miembro del equipo). Respetá el contrato: el legajo en el cliente y las APIs de la sección 4.
-7. Encabezados de seguridad en `next.config` (`X-Content-Type-Options`, `Referrer-Policy`, HSTS).
-8. Rate limiting en `/api/chat`: es público y consume créditos de IA.
+1. **Prueba de punta a punta en navegador** del guion de la demo, también en mobile. Incluye imprimir la carpeta desde `/referral/[id]`.
+2. **Precio de Rosario real**: reemplazar el valor fijo por una fuente pública, con respaldo manual.
+3. **NDVI real** de Sentinel-2 para al menos el lote de Ataliva. Mostrar la fecha de la imagen y la nubosidad.
+4. **Rindes del MAGyP** por departamento en lugar de `DEFAULT_YIELD_T_HA`.
+5. **Reescritura de la UI** (lo hace otro miembro del equipo). Respetá el contrato: el legajo en el cliente y las APIs de la sección 4.
+6. Encabezados de seguridad en `next.config` (`X-Content-Type-Options`, `Referrer-Policy`, HSTS).
+7. Rate limiting en `/api/chat`: es público y consume créditos de IA.
 
 ---
 
