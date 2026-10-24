@@ -21,5 +21,14 @@ export async function POST(request: Request) {
   const { messages, profile, boardPrice } = parsed.data
   const agent = createFarmAgent({ profile, boardPrice })
 
-  return createAgentUIStreamResponse({ agent, uiMessages: messages })
+  return createAgentUIStreamResponse({ agent, uiMessages: messages, onError: chatErrorMessage })
+}
+
+function chatErrorMessage(error: unknown) {
+  const message = error instanceof Error ? error.message : String(error)
+  console.error('[chat] agent failed', message)
+  if (message.includes('credit card')) {
+    return 'El asistente no está disponible: falta activar AI Gateway en la cuenta de Vercel (agregar una tarjeta).'
+  }
+  return 'No pude responder. Probá de nuevo en un momento.'
 }
