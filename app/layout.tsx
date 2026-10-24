@@ -7,8 +7,8 @@ const _plexSans = IBM_Plex_Sans({ subsets: ['latin'], weight: ['400', '500', '60
 const _plexMono = IBM_Plex_Mono({ subsets: ['latin'], weight: ['400', '500'] })
 
 export const metadata: Metadata = {
-  title: 'Surco AI · El legajo único del productor',
-  applicationName: 'Surco AI',
+  title: 'MiCampo · El legajo único del productor',
+  applicationName: 'MiCampo',
   description:
     'Copiloto con IA para productores agropecuarios: cuándo entrar al lote, cuánto vender y la carpeta de seguro y financiación lista, desde una sola conversación.',
   generator: 'v0.app',

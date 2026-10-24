@@ -1,4 +1,4 @@
-# Surco AI
+# MiCampo
 
 Copiloto con IA para productores agropecuarios argentinos. Desde una sola conversación cruza clima, satélite (NDVI) y contratos de venta para responder tres preguntas: cuándo entrar al lote, cuánto vender y si conviene armar la carpeta de seguro o financiación.
 

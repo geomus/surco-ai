@@ -1,4 +1,4 @@
-# AGENTS.md — Contexto completo de Surco AI
+# AGENTS.md — Contexto completo de MiCampo
 
 Este archivo es la fuente de verdad para cualquier persona o agente de IA (v0, Claude Code, Cursor, Codex, etc.) que quiera trabajar en este repo sin haber participado de las conversaciones previas. Leelo completo antes de escribir código.
 
@@ -6,9 +6,9 @@ Este archivo es la fuente de verdad para cualquier persona o agente de IA (v0, C
 
 ---
 
-## 1. Qué es Surco AI
+## 1. Qué es MiCampo
 
-Copiloto conversacional para productores agropecuarios argentinos. El productor escribe como en WhatsApp ("tengo 150 ha de trigo en Ataliva, vendí 360 t a 190 y el jueves me cayó granizo") y Surco:
+Copiloto conversacional para productores agropecuarios argentinos. El productor escribe como en WhatsApp ("tengo 150 ha de trigo en Ataliva, vendí 360 t a 190 y el jueves me cayó granizo") y MiCampo:
 
 1. **Arma un legajo único** del productor a partir del lenguaje natural (ubicación, cultivo, hectáreas, etapa, contratos).
 2. **Cruza señales**: clima hora por hora (Open-Meteo), estado del lote por zonas (NDVI de Sentinel-2), producción estimada contra lo ya vendido y precio de mercado.
@@ -28,7 +28,7 @@ Contexto de negocio: proyecto de hackatón, con demo **en vivo**. El canal es un
 - **Las reglas son auditables.** Todos los umbrales viven en `config/rules.ts`. Un agrónomo o el equipo de riesgo de fyo tienen que poder leerlos y ajustarlos.
 - **Honestidad sobre los datos.** Cada dato se rotula como real o ilustrativo, y cada herramienta devuelve un campo `source`.
 - **Consentimiento antes de compartir.** Ninguna derivación se guarda sin `consent: true` (lo exige también un `check` en la base).
-- **No es asesoramiento financiero.** Surco explica lo que dicen los datos; no contrata, no vende y no recomienda operaciones concretas.
+- **No es asesoramiento financiero.** MiCampo explica lo que dicen los datos; no contrata, no vende y no recomienda operaciones concretas.
 
 ---
 
@@ -43,7 +43,7 @@ Contexto de negocio: proyecto de hackatón, con demo **en vivo**. El canal es un
 | 5. Derivaciones con consentimiento | Parcial | API y guardado listos; **falta la vista imprimible** y la prueba de punta a punta en navegador |
 | 6. Verificación en navegador + README | Pendiente | |
 
-**Repo:** público, `surco-ai`. **Deploy:** Vercel, proyecto `surco-ai` (team `geomus-projects`), URL `https://surco-ai-ar.vercel.app`. La URL vieja `estrategia-para-hackaton-shipp.vercel.app` redirige con un 308.
+**Repo:** público, `surco-ai` (nombre técnico heredado; el producto se llama MiCampo). **Deploy:** Vercel, proyecto `surco-ai` (team `geomus-projects`), URL `https://surco-ai-ar.vercel.app`. La URL vieja `estrategia-para-hackaton-shipp.vercel.app` redirige con un 308.
 
 ---
 
@@ -161,7 +161,7 @@ Las claves JSON de `profile` están en camelCase (`referenceYieldTHa`, `ndviCurr
 
 **Plan B:** si falla la IA, el panel (`/api/signals`) sigue funcionando sin el modelo. Si falla Open-Meteo, entra el caché. Igual conviene grabar un video de respaldo de 2 minutos.
 
-**Posicionamiento:** hoy el productor mezcla WhatsApp con el agrónomo y el acopio, la planilla del corredor y apps de satélite o precios que muestran datos sueltos. Surco **cruza esos datos, decide y deriva**. No afirmes nada sobre funciones de productos de terceros.
+**Posicionamiento:** hoy el productor mezcla WhatsApp con el agrónomo y el acopio, la planilla del corredor y apps de satélite o precios que muestran datos sueltos. MiCampo **cruza esos datos, decide y deriva**. No afirmes nada sobre funciones de productos de terceros.
 
 ---
 
@@ -230,7 +230,7 @@ Después recorré el guion de la sección 6 en el navegador.
 - Que el modelo calcule o estime números por su cuenta.
 - Presentar datos ilustrativos como reales.
 - Guardar o compartir datos de terceros sin consentimiento. No uses CUIT ni datos de productores reales sin permiso escrito.
-- Prometer en la UI cotizaciones de seguro o aprobación de crédito: Surco arma la solicitud; decide la entidad.
+- Prometer en la UI cotizaciones de seguro o aprobación de crédito: MiCampo arma la solicitud; decide la entidad.
 - Commitear secretos o archivos `.env*`.
 
 ---
