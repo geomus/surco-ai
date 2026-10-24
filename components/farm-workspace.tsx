@@ -7,26 +7,28 @@ import { ChatPanel } from '@/components/chat-panel'
 import { SignalsPanel } from '@/components/signals-panel'
 import type { FarmAgentMessage } from '@/lib/agent'
 import type { DemoCase } from '@/lib/cases'
-import { applyProfileChanges, type FarmProfile } from '@/lib/profile'
+import type { FarmProfile } from '@/lib/profile'
 import { cn } from '@/lib/utils'
 
-export type CaseId = 'green' | 'yellow' | 'red'
+export type CaseId = 'scratch' | 'green' | 'yellow' | 'red'
 
 const transport = new DefaultChatTransport<FarmAgentMessage>({ api: '/api/chat' })
 
+// The server resolves location and zones, so the latest tool output is the source of truth.
 function deriveProfile(base: FarmProfile, messages: FarmAgentMessage[]) {
-  return messages.reduce((profile, message) => {
+  let profile = base
+  for (const message of messages) {
     for (const part of message.parts) {
       if (part.type === 'tool-updateProfile' && part.state === 'output-available') {
-        profile = applyProfileChanges(profile, part.input)
+        profile = part.output.profile
       }
     }
-    return profile
-  }, base)
+  }
+  return profile
 }
 
 export function FarmWorkspace({ cases, defaultBoardPrice }: { cases: DemoCase[]; defaultBoardPrice: number }) {
-  const [caseId, setCaseId] = useState<CaseId>('green')
+  const [caseId, setCaseId] = useState<CaseId>('scratch')
   const [boardPrice, setBoardPrice] = useState(defaultBoardPrice)
   const { messages, sendMessage, status, error, stop } = useChat<FarmAgentMessage>({ id: caseId, transport })
 
@@ -79,7 +81,7 @@ export function FarmWorkspace({ cases, defaultBoardPrice }: { cases: DemoCase[];
       </header>
 
       <p className="border-b bg-muted px-4 py-1.5 text-center text-xs leading-relaxed text-muted-foreground">
-        Caso ilustrativo: productores y contratos ficticios sobre ubicaciones y clima reales. NDVI precalculado. Precio
+        Real: ubicación y pronóstico (Open-Meteo). Ilustrativo: productores, contratos y NDVI precalculado. Precio
         pizarra cargado a mano.
       </p>
 

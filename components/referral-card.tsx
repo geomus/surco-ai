@@ -8,10 +8,10 @@ import type { FarmAgentMessage } from '@/lib/agent'
 import { LEVEL_LABEL, LEVEL_TEXT, formatPct, formatTons, formatUsd } from '@/lib/format'
 import type { FarmProfile } from '@/lib/profile'
 
-type ReferralDraft = Extract<
-  FarmAgentMessage['parts'][number],
-  { type: 'tool-prepareReferral'; state: 'output-available' }
->['output']
+type ReferralDraft = Exclude<
+  Extract<FarmAgentMessage['parts'][number], { type: 'tool-prepareReferral'; state: 'output-available' }>['output'],
+  { missing: string[] }
+>
 
 type ReferralCardProps = { draft: ReferralDraft; caseId: CaseId; profile: FarmProfile; boardPrice: number }
 

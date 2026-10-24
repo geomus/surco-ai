@@ -4,6 +4,8 @@ Copiloto con IA para productores agropecuarios argentinos. Desde una sola conver
 
 > Los 3 casos de demo (Pergamino, Marcos Juárez, Ataliva) usan datos sintéticos. El granizo del 22/10/2026 en Ataliva y el pronóstico de Open-Meteo son reales.
 
+> **¿Vas a contribuir o sos un agente de IA?** Leé primero [`AGENTS.md`](./AGENTS.md): contexto completo, estado, pendientes y criterios.
+
 ## Arquitectura
 
 | Capa | Ruta | Qué hace |

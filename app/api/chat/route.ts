@@ -1,14 +1,14 @@
 import { createAgentUIStreamResponse } from 'ai'
 import { z } from 'zod'
 import { createFarmAgent } from '@/lib/agent'
+import { CASE_IDS } from '@/lib/cases'
 import { profileSchema } from '@/lib/profile'
-import { getWeather } from '@/lib/weather'
 
 export const maxDuration = 60
 
 const bodySchema = z.object({
   messages: z.array(z.unknown()).max(60),
-  caseId: z.enum(['green', 'yellow', 'red']),
+  caseId: z.enum(CASE_IDS),
   profile: profileSchema,
   boardPrice: z.number().positive().max(2000),
 })
@@ -18,9 +18,8 @@ export async function POST(request: Request) {
   if (!parsed.success) {
     return Response.json({ error: 'Pedido inválido' }, { status: 400 })
   }
-  const { messages, caseId, profile, boardPrice } = parsed.data
-  const weather = await getWeather(caseId, profile.lat, profile.lon)
-  const agent = createFarmAgent({ profile, weather, boardPrice })
+  const { messages, profile, boardPrice } = parsed.data
+  const agent = createFarmAgent({ profile, boardPrice })
 
   return createAgentUIStreamResponse({ agent, uiMessages: messages })
 }

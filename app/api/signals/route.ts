@@ -1,10 +1,11 @@
 import { z } from 'zod'
+import { CASE_IDS } from '@/lib/cases'
 import { computeSignals } from '@/lib/engine'
-import { profileSchema } from '@/lib/profile'
+import { isProfileReady, missingProfileFields, profileSchema } from '@/lib/profile'
 import { getWeather, weatherSourceLabel } from '@/lib/weather'
 
 const bodySchema = z.object({
-  caseId: z.enum(['green', 'yellow', 'red']),
+  caseId: z.enum(CASE_IDS),
   profile: profileSchema,
   boardPrice: z.number().positive().max(2000),
   task: z.enum(['spray', 'harvest']).default('spray'),
@@ -15,10 +16,14 @@ export async function POST(request: Request) {
   if (!parsed.success) {
     return Response.json({ error: 'Pedido inválido' }, { status: 400 })
   }
-  const { caseId, profile, boardPrice, task } = parsed.data
-  const weather = await getWeather(caseId, profile.lat, profile.lon)
+  const { profile, boardPrice, task } = parsed.data
+  if (!isProfileReady(profile)) {
+    return Response.json({ signals: null, weatherSource: null, missing: missingProfileFields(profile) })
+  }
+  const weather = await getWeather(profile.lat, profile.lon)
   return Response.json({
     signals: computeSignals(profile, weather, boardPrice, task),
     weatherSource: weatherSourceLabel(weather),
+    missing: [],
   })
 }
