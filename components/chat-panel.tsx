@@ -150,7 +150,7 @@ export function ChatPanel({ caseId, profile, boardPrice, messages, busy, error, 
         )}
         {error && (
           <p role="alert" className="text-sm text-destructive">
-            No pude responder. Probá de nuevo en un momento.
+            {error.message || 'No pude responder. Probá de nuevo en un momento.'}
           </p>
         )}
       </div>

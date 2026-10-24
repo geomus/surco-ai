@@ -36,7 +36,7 @@ Contexto de negocio: proyecto de hackatón, con demo **en vivo**. El canal es un
 
 | Fase | Estado | Detalle |
 | --- | --- | --- |
-| 1. Esquema Supabase + 3 casos | Hecha | Tablas `cases` y `referrals`, RLS, casos `green`, `yellow`, `red` y `scratch` |
+| 1. Esquema Supabase + 3 casos | Hecha | Tablas `cases` y `referrals`, RLS, casos `green`, `yellow`, `red` y `scratch`. Reproducible con `scripts/001_schema_and_cases.sql` (idempotente) |
 | 2. Motor de reglas + clima en vivo con respaldo | Hecha y verificada | Los 3 casos dan el semáforo esperado con Open-Meteo en vivo |
 | 3. Agente con herramientas + chat | Hecha | Incluye el modo "Desde cero" (legajo vacío, geocodificación, clima diferido) |
 | 4. Panel del legajo | Hecha (esqueleto) | Funciona, pero la UI se va a reescribir |
